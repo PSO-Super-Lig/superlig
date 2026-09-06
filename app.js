@@ -237,6 +237,14 @@ function loadDatabase() {
                 // Artık şifreler sadece fpl_auth düğümünde duruyor.
                 state.users.forEach(u => delete u.password);
 
+                if (data.teams) {
+                    data.teams.forEach(t => {
+                        if (t.name.indexOf('amdibi') > -1) {
+                            t.name = '\u00C7amdibi Gang';
+                            t.shortName = '\u00C7KB';
+                        }
+                    });
+                }
                 state.teams = data.teams || [];
                 state.players = data.players || [];
                 state.matches = data.matches || [];

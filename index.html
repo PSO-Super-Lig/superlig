@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=32">
+    <link rel="stylesheet" href="style.css?v=91">
 
     <!-- Firebase SDK (v8 Compat for simplicity) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -57,9 +57,7 @@
                 <button class="nav-item" data-target="social" id="nav-social-btn">
                     <i class="fa-brands fa-x-twitter"></i> Sosyal (X)
                 </button>
-                <button class="nav-item" data-target="betting" id="nav-betting-btn">
-                    <i class="fa-solid fa-dice"></i> Bahis
-                </button>
+                
                 <button class="nav-item admin-nav hidden" data-target="admin" id="sidebar-admin-btn">
                     <i class="fa-solid fa-screwdriver-wrench"></i> Yönetici Paneli
                 </button>
@@ -643,13 +641,7 @@
                     </div>
                 </section>
 
-                <!-- BETTING SCREEN -->
-                <section id="betting" class="content-section">
-                    <div class="card">
-                        <div class="card-header"><h4><i class="fa-solid fa-dice"></i> Bahis Merkezi</h4><p class="text-muted" style="margin:0;font-size:0.85rem;">Admin tarafından bahise açılan maçlara tahminde bulunun.</p></div>
-                        <div id="betting-matches-container" style="padding:1rem;display:flex;flex-direction:column;gap:1rem;"></div>
-                    </div>
-                </section>
+                
 
 
 
@@ -841,7 +833,7 @@
 
     <!-- NOTIFICATION TOAST -->
     <div id="notification-toast" class="toast hidden"></div>
-    <script src="app.js?v=51"></script>
+    <script src="app.js?v=91"></script>
 </body>
 </html>
 
