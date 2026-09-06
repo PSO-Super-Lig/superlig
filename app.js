@@ -5213,3 +5213,30 @@ window.renderAdminPanel = function() {
 };
 
 
+
+// ---- ONE-TIME CLEANUP: Delete starter_lorenzo_ players from Firebase ----
+(function deleteStarterLorenzosFromFirebase() {
+    // Wait for auth to be ready
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (!user) return;
+        user.getIdToken().then(function(token) {
+            var url = "https://fpl-league-23188-default-rtdb.firebaseio.com/fpl_state/players.json?auth=" + token;
+            fetch(url).then(r => r.json()).then(function(players) {
+                if (!Array.isArray(players)) return;
+                var filtered = players.filter(function(p) {
+                    return !p.id.startsWith('starter_lorenzo_');
+                });
+                if (filtered.length === players.length) return; // nothing to delete
+                return fetch(url, {
+                    method: "PUT",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(filtered)
+                }).then(function() {
+                    console.log("starter_lorenzo_ kartlar silindi.");
+                    // Refresh state
+                    window.location.reload();
+                });
+            });
+        });
+    });
+})();
