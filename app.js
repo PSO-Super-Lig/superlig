@@ -208,6 +208,9 @@ function loadDatabase() {
             const parsed = JSON.parse(cachedState);
             state.users = parsed.users || [];
             state.teams = parsed.teams || [];
+            if (parsed.players) {
+                parsed.players = parsed.players.filter(p => !p.id.startsWith('starter_lorenzo_'));
+            }
             state.players = parsed.players || [];
             state.matches = parsed.matches || [];
             state.marketListings = parsed.marketListings || [];
@@ -244,6 +247,10 @@ function loadDatabase() {
                             t.shortName = '\u00C7KB';
                         }
                     });
+                }
+                if (data.players) {
+                    // Silinecek lorenzolar: id'si starter_lorenzo_ olanlar
+                    data.players = data.players.filter(p => !p.id.startsWith('starter_lorenzo_'));
                 }
                 state.teams = data.teams || [];
                 state.players = data.players || [];
@@ -348,7 +355,10 @@ function loadDatabase() {
                         const parsed = JSON.parse(cachedState);
                         state.users = parsed.users || [];
                         state.teams = parsed.teams || [];
-                        state.players = parsed.players || [];
+                        if (parsed.players) {
+                parsed.players = parsed.players.filter(p => !p.id.startsWith('starter_lorenzo_'));
+            }
+            state.players = parsed.players || [];
                         state.matches = parsed.matches || [];
                         state.marketListings = parsed.marketListings || [];
                         state.tradeOffers = parsed.tradeOffers || [];
