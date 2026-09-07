@@ -1,4 +1,4 @@
-﻿// ==========================================================================
+// ==========================================================================
 // FPL Ultimate Market, Packs and Economy - Core Application JS
 // ==========================================================================
 
@@ -5215,10 +5215,13 @@ window.renderAdminPanel = function() {
 
 
 // ---- ONE-TIME CLEANUP: Delete starter_lorenzo_ players from Firebase ----
+// Only runs if they still exist; does NOT reload page to avoid infinite loop
 (function deleteStarterLorenzosFromFirebase() {
-    // Wait for auth to be ready
     firebase.auth().onAuthStateChanged(function(user) {
         if (!user) return;
+        // Only check once per session
+        if (sessionStorage.getItem('lorenzo_cleanup_done')) return;
+        sessionStorage.setItem('lorenzo_cleanup_done', '1');
         user.getIdToken().then(function(token) {
             var url = "https://fpl-league-23188-default-rtdb.firebaseio.com/fpl_state/players.json?auth=" + token;
             fetch(url).then(r => r.json()).then(function(players) {
@@ -5233,8 +5236,11 @@ window.renderAdminPanel = function() {
                     body: JSON.stringify(filtered)
                 }).then(function() {
                     console.log("starter_lorenzo_ kartlar silindi.");
-                    // Refresh state
-                    window.location.reload();
+                    // Update local state without reloading
+                    state.players = state.players.filter(function(p) {
+                        return !p.id.startsWith('starter_lorenzo_');
+                    });
+                    if (typeof renderAll === 'function') renderAll();
                 });
             });
         });
